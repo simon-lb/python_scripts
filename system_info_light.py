@@ -127,7 +127,7 @@ def main():
                     ssh.close()
                     
                 except: #report to console unreacheable hosts or other error
-                    print("ERROR: Could not establish connection with host or something else is wrong..!!!" + str(host) + "\n")
+                    print("ERROR: Could not establish connection with host or something else is wrong with host:  " + str(host) + "\n")
     
     
     
