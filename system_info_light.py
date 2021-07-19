@@ -8,7 +8,7 @@ Created on Fri Jul  2 18:17:18 2021
 
 # **Hi User** !  This script performs the following:
 
-# receives a list of servers & retrieves a system info from each one of them and aggregates in one reporting file:
+# receives a list of linux servers, ssh to each one & retrieves a system info from each one of them and aggregates in one reporting file:
 # Informatoin which will be retrieved : | hostname | System Time | num of CPUs | CPU models | NIC installed | drives installed |
 # for running it, you have to provide a path for creating report, and a path where a hosts file is placed. 
 # before running, make sure you have paramiko and argparse modules installed
@@ -60,7 +60,7 @@ def get_drivers(ssh):
     return lsdrivers #function to return the value
 
 def get_time(ssh):
-    stdin, stdout, stderr = ssh.exec_command("date") #execute the command to get drivers on the remote server
+    stdin, stdout, stderr = ssh.exec_command("date") #execute the command to get date on the remote server
     cmd5 = stdout.readlines() #return only the stdout
     cmd5 = "".join(cmd5) #join output to make it clean and easy to read
     date = cmd5 #save value
@@ -93,11 +93,11 @@ def main():
     password = "customer"
     
     
-    #loop on each host in hosts file and print on which host code is running 
+    #open a file in write mode, and keep it open while loop is running, to store all hosts data in same file
     with open(reportpath, 'w') as f:
         for host in hosts_file:
                 host = host.strip()
-                print("Checking Server: ", host)
+                print("Checking Server: ", host) #loop on each host in hosts file and print on which host code is running 
                 
                 try:
                     #create new ssh client
@@ -112,9 +112,6 @@ def main():
                     print("Executing commands for host " + str(host) + " ==> ...Saving data to file...")
         
                     # what will be written for each host to a created file
-    
-    
-                    #with open(reportpath, 'w') as f:
                     f.write("SYSTEM INFO FOR HOST:\n" + str(get_hostname(ssh)) + "IP address: " + str(host) + "\n" + "System Time: " + str(get_time(ssh)) + "\n\n" + "CPU Model: \n" +
                                       str(get_cpu(ssh)) + "\n\n" + "Number of CPU's: \n" + str(get_cpu_count(ssh)) + "\n\n" +
                                       "Installed NIC Driver:\n" + str(get_nic(ssh)) + "\n\n" +
