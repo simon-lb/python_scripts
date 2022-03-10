@@ -8,7 +8,6 @@ Created on Fri Jul  2 18:17:18 2021
 
 # receives a list of linux servers, ssh to each one & retrieves a system info from each one of them and aggregates in one reporting file:
 # Informatoin which will be retrieved : | hostname | System Time | num of CPUs | CPU models | NIC installed | drives installed |
-# for running it, you have to provide a path for creating report, and a path where a hosts file is placed. 
 # before running, make sure you have paramiko and argparse modules installed
 # (pip3 install paramiko argparse)
 # For running it, you'll have to provide a path to a hosts file, and the password for the root user. 
